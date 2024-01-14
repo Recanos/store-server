@@ -5,6 +5,7 @@ from products.models import Basket
 from users.models import User
 from users.forms import UserLoginForm, UserRegistrationForm, UserProfileForm
 from django.contrib.auth.decorators import login_required
+
 def login(request):
     if request.method == "POST":
         form = UserLoginForm(data=request.POST)
