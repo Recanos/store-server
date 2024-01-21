@@ -11,7 +11,7 @@
     <meta name="author" content="">
 
     <title>{{ title }}</title>
-
+    <!-- Bootstrap core JavaScript -->
     <!-- Bootstrap core CSS -->
     <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
 
@@ -43,7 +43,7 @@
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <li>
-                            <a class="dropdown-item" href="{% url 'users:profile' %}">Профиль</a>
+                            <a class="dropdown-item" href="{% url 'users:profile' user.id %}">Профиль</a>
                         </li>
                         <li><a class="dropdown-item" href="orders/orders.html">Заказы</a></li>
                         {% if user.is_superuser or user.is_stuff %}
