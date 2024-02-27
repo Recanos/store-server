@@ -15,7 +15,7 @@ from users.models import User
 # Create your views here.
 class IndexView(titleMixin, TemplateView):
     template_name = 'products/index.html'
-    title = "Welcome!!!"
+    title = "Welcome!"
 
 
 

@@ -44,6 +44,8 @@ INSTALLED_APPS = [
 
     'allauth.socialaccount.providers.github',
 
+    'debug_toolbar',
+
     'products',
     'users',
 ]
@@ -57,7 +59,9 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
-    "allauth.account.middleware.AccountMiddleware",
+    'allauth.account.middleware.AccountMiddleware',
+
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'store.urls'
@@ -82,6 +86,21 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'store.wsgi.application'
 
+INTERNAL_IPS = [
+    # ...
+    "127.0.0.1",
+    # ...
+]
+
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/1",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    }
+}
 
 # Database
 
@@ -149,17 +168,17 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'users.User'
 LOGIN_URL = '/users/login/'
 LOGOUT_REDIRECT_URL = '/'
-
+LOGIN_REDIRECT_URL = 'index'
 # sending email
 # Email settings
 
-# EMAIL_HOST = 'smtp.yandex.ru'
-# EMAIL_PORT = '465' 
-# EMAIL_HOST_USER = 'storserwer@yandex.ru'
-# EMAIL_HOST_PASSWORD = 'pgtrsuezjsihegen'
-# EMAIL_USE_SSL = True
+EMAIL_HOST = 'smtp.yandex.ru'
+EMAIL_PORT = '465' 
+EMAIL_HOST_USER = 'storserwer@yandex.ru'
+EMAIL_HOST_PASSWORD = 'pgtrsuezjsihegen'
+EMAIL_USE_SSL = True
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+#EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 #Oauth
 
@@ -172,11 +191,12 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 SOCIALACCOUNT_PROVIDERS = {
-    'github': {
-        'SCOPE': [
-            'user',
-            'repo',
-            'read:org',
-        ],
-    }
+    "github": {
+        "VERIFIED_EMAIL": True
+    },
 }
+
+#Celery
+
+CELERY_BROKER_URL = 'redis://127.0.0.1:6379' 
+CELERY_RESULT_BACKEND = 'redis://127.0.0.1:6379'

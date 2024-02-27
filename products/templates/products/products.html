@@ -1,5 +1,5 @@
 {% extends 'products/base.html' %}
-{% load static %}
+{% load static cache  %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -12,7 +12,7 @@
     <div class="container">
 
         <div class="row">
-
+ 
             <div class="col-lg-3">
 
                 <h1 class="my-4">Store</h1>
@@ -53,9 +53,8 @@
                         <span class="sr-only">Next</span>
                     </a>
                 </div>
-
+                {% cache 30 object_list page_obj %}
                 <div class="row">
-
                     {% for product in object_list %}
                         <div class="col-lg-4 col-md-6 mb-4">
                         <div class="card h-100">
@@ -100,7 +99,7 @@
                     </ul>
                 </nav>
                 {% endif %}
-
+                {% endcache %}
             </div>
 
         </div>
