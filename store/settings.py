@@ -25,9 +25,9 @@ SECRET_KEY = 'django-insecure-2sz*)(xb^vl4066s3*q_on6w=m&cd2fxw4_*kzu37o@n$af&3o
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', '5c12-188-243-183-76.ngrok-free.app']
 
-DOMAIN_NAME = 'http://localhost:8000'
+DOMAIN_NAME = 'http://127.0.0.1:8000'
 # Application definition
 
 INSTALLED_APPS = [
@@ -48,6 +48,9 @@ INSTALLED_APPS = [
 
     'products',
     'users',
+    'orders',
+
+    'django.contrib.humanize',
 ]
 
 MIDDLEWARE = [
