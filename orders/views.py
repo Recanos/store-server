@@ -1,18 +1,22 @@
-from django.forms import BaseModelForm
-from django.views.generic.edit import CreateView
-from django.views.generic.base import TemplateView
-from .forms import OrderForm
-from common.views import titleMixin
-from django.urls import reverse_lazy, reverse
-from django.shortcuts import HttpResponseRedirect
-import uuid
-from store import settings
-from yookassa import Configuration, Payment
-from http import HTTPStatus
 import json
+import uuid
+from http import HTTPStatus
+
+from django.forms import BaseModelForm
 from django.http import HttpResponse
-from yookassa.domain.notification import WebhookNotification
+from django.shortcuts import HttpResponseRedirect
+from django.urls import reverse, reverse_lazy
 from django.views.decorators.csrf import csrf_exempt
+from django.views.generic.base import TemplateView
+from django.views.generic.edit import CreateView
+from yookassa import Configuration, Payment
+from yookassa.domain.notification import WebhookNotification
+
+from common.views import titleMixin
+from products.models import Basket
+from store import settings
+
+from .forms import OrderForm
 
 Configuration.account_id = 342769
 Configuration.secret_key = 'test_Vb7ZZyumJs-2lCDn73a7B5lj02eJNycs5zNjxeN14hI'
@@ -38,7 +42,7 @@ class OrderCreateView(titleMixin, CreateView):
 
         payment = Payment.create({
             "amount": {
-                "value": "100.00",
+                "value": f"{Basket.objects.filter(user=request.user).total_sum()}",
                 "currency": "RUB"
             },
             "confirmation": {

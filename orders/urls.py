@@ -1,7 +1,7 @@
 from django.urls import path
-from orders.views import OrderCreateView, SuccessTemplateView, yookassa_webhook_view
 
-
+from orders.views import (OrderCreateView, SuccessTemplateView,
+                          yookassa_webhook_view)
 
 app_name = 'orders'
 

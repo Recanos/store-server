@@ -9,9 +9,9 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
-import environ
-
 from pathlib import Path
+
+import environ
 
 env = environ.Env(
     # set casting, default value
@@ -48,7 +48,7 @@ SECRET_KEY = env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DEBUG')
 
-ALLOWED_HOSTS = ['*', '127.0.0.1', '5c12-188-243-183-76.ngrok-free.app']
+ALLOWED_HOSTS = ['*']
 
 DOMAIN_NAME = env('DOMAIN_NAME')
 # Application definition
@@ -76,6 +76,10 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
 
     'django_extensions',
+
+    'rest_framework',
+
+    'rest_framework.authtoken',
 ]
 
 MIDDLEWARE = [
@@ -239,3 +243,13 @@ SOCIALACCOUNT_PROVIDERS = {
 
 CELERY_BROKER_URL = f'redis://{REDIS_HOST}:{REDIS_PORT}' 
 CELERY_RESULT_BACKEND = f'redis://{REDIS_HOST}:{REDIS_PORT}'
+
+#DRF
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 3,
+
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+}

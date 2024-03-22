@@ -1,5 +1,5 @@
 {% extends 'products/base.html' %}
-{% load static cache humanize %}
+{% load static %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -12,7 +12,7 @@
     <div class="container">
 
         <div class="row">
- 
+
             <div class="col-lg-3">
 
                 <h1 class="my-4">Store</h1>
@@ -53,8 +53,9 @@
                         <span class="sr-only">Next</span>
                     </a>
                 </div>
-                {% cache 30 object_list page_obj %}
+
                 <div class="row">
+
                     {% for product in object_list %}
                         <div class="col-lg-4 col-md-6 mb-4">
                         <div class="card h-100">
@@ -67,7 +68,7 @@
                                 <h4 class="card-title">
                                     <a href="#">{{ product.name }}</a>
                                 </h4>
-                                <h5>{{ product.price | intcomma }}</h5>
+                                <h5>{{ product.price }}</h5>
                                 <p class="card-text">{{ product.describtion }}</p>
                             </div>
                             <div class="card-footer text-center">
@@ -80,7 +81,7 @@
                         </div>
                     {% endfor %}
                 </div>
-                {% if page_obj.paginator.num_pages > 1 %}
+                {% if is_paginated %}
                 <nav aria-label="Page navigation example">
                     <ul class="pagination justify-content-center">
                         <li class="page-item {% if not page_obj.has_previous %} disabled {% endif %}">
@@ -88,7 +89,7 @@
                                href="{% if page_obj.has_previous %} ?page={{ page_obj.previous_page_number }} {% else %} # {% endif %}"
                                tabindex="-1" aria-disabled="true">Предыдущая</a>
                         </li>
-                        {% for page in paginator.page_range %}
+                        {% for page in page_obj.paginator.page_range %}
                             <li class="page-item"><a class="page-link" href="?page={{ page }}">{{ page }}</a></li>
                         {% endfor %}
                         <li class="page-item {% if not page_obj.has_next %} disabled {% endif %}">
@@ -99,7 +100,6 @@
                     </ul>
                 </nav>
                 {% endif %}
-                {% endcache %}
             </div>
 
         </div>

@@ -1,5 +1,7 @@
 from django import forms
+
 from orders.models import Order
+
 
 class OrderForm(forms.ModelForm):
     first_name = forms.CharField(widget=forms.TextInput(attrs={'class' : "form-control", 'placeholder' : 'Иван'}))

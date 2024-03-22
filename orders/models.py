@@ -1,5 +1,7 @@
 from django.db import models
+
 from users.models import User
+
 
 class Order(models.Model):
     CREATED = 0
